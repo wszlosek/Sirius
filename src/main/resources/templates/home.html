@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sirius</title>
+    <link rel='stylesheet' type='text/css'
+          href='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.63.0/maps/maps.css'>
+    <style>
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+    <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.63.0/maps/maps-web.min.js'></script>
+</head>
+<body>
+<div id='map' class='map'></div>
+<script th:inline="javascript">
+    var map = tt.map({
+        key: "55fTaan5Ak0lpkFRPHk8XzDVAyrU752A", // this will be replaced by Thymeleaf at runtime 55fTaan5Ak0lpkFRPHk8XzDVAyrU752A
+        container: 'map',
+        style: 'tomtom://vector/1/basic-main'
+    });
+    map.addControl(new tt.FullscreenControl());
+    map.addControl(new tt.NavigationControl());
+
+    const popupOffsets = {
+        top: [0, 0],
+        bottom: [0, -50],
+        'bottom-right': [0, -70],
+        'bottom-left': [0, -70],
+        left: [25, -35],
+        right: [-25, -35]
+    }
+
+    const coolLocations = /*[[${coolLocations}]]*/ null;
+    coolLocations.forEach(location => {
+        const marker = new tt.Marker().setLngLat(location.lnglat).addTo(map);
+        const popup = new tt.Popup({offset: popupOffsets}).setHTML(location.description);
+        marker.setPopup(popup).togglePopup();
+    });
+
+</script>
+</body>
+</html>>
