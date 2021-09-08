@@ -38,9 +38,12 @@
     const coolLocations = /*[[${coolLocations}]]*/ null;
     coolLocations.forEach(location => {
         const marker = new tt.Marker().setLngLat(location.lnglat).addTo(map);
-        const popup = new tt.Popup({offset: popupOffsets}).setHTML(location.description);
+        const popup = new tt.Popup({offset: popupOffsets}).setHTML(location.description + location.xd);
         marker.setPopup(popup).togglePopup();
     });
+
+    const xd = null;
+    xd.forEach()
 
 </script>
 </body>
