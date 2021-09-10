@@ -30,7 +30,7 @@ public class Weather {
         this.longitude = String.valueOf(longi);
     }
 
-    public void initiation() throws IOException {
+    public com.app.Sirius.OpenWeatherReader.Weather initiation() throws IOException {
 
         this.urlAddress = this.urlAddress.replace("{lat}", this.latitude)
                 .replace("{lon}", this.longitude).replace("{API key}", this.apiKey);
@@ -39,5 +39,6 @@ public class Weather {
         InputStreamReader reader = new InputStreamReader(url.openStream());
         com.app.Sirius.OpenWeatherReader.Weather weather = new Gson().fromJson(reader, com.app.Sirius.OpenWeatherReader.Weather.class);
         System.out.println(weather.toString());
+        return weather;
     }
 }

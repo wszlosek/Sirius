@@ -1,11 +1,13 @@
 package com.app.Sirius;
 
+import com.app.Sirius.OpenWeatherReader.Weather__1;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -23,34 +25,63 @@ public class MapController {
 
     private List<Location> coolLocations() {
 
+        Location l = new Location(new double[]{20.863889, 50.236389}, "Zalipie");
         try {
-            xd();
+            l.includeWeather();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return List.of(
-                new Location(new double[]{-121.901481, 36.618253}, "Monterey Bay Aquarium"),
-                new Location(new double[]{21.006010, 52.231606}, "Palace of Culture and Science"),
-                new Location(new double[]{20.863889, 50.236389}, "Zalipie")
-        );
-    }
 
-    private void xd() throws IOException {
-
-        Weather w1 = new Weather();
-        w1.setCoords(3.45, 1.2);
-        w1.initiation();
+        return List.of(l);
     }
 
     private static class Location {
         private final double[] lnglat;
         private final String description;
-        private final String xd;
+        private Weather weather;
+        private com.app.Sirius.OpenWeatherReader.Weather w;
+        public String printer;
+
+        public Location(double[] lnglat) {
+            this.lnglat = lnglat;
+            this.description = "";
+            this.weather = new Weather();
+            this.printer = "";
+        }
 
         public Location(double[] lnglat, String description) {
             this.lnglat = lnglat;
             this.description = description;
-            this.xd = "xdddd";
+            this.weather = new Weather();
+            this.printer = "";
+        }
+
+        public void includeWeather() throws IOException {
+            this.weather.setCoords(this.lnglat[1], this.lnglat[0]);
+            w = this.weather.initiation();
+            initPrinter();
+        }
+
+        @Override
+        public String toString() {
+            return "Location{" +
+                    "lnglat=" + Arrays.toString(lnglat) +
+                    ", description='" + description + '\'' +
+                    ", weather=" + weather +
+                    '}';
+        }
+
+        private void initPrinter() {
+
+            Weather__1 w1 = w.getWeather().get(0);
+            this.printer = "Location: " + description + "<br> temp.: "
+                    + w.kelvinToCelsius(w.getMain().getTemp()) + "°C <br>"
+                    + w1.getDescription();
+        }
+
+        public String getPrinter() {
+            initPrinter();
+            return printer;
         }
 
         public double[] getLnglat() {
@@ -59,10 +90,6 @@ public class MapController {
 
         public String getDescription() {
             return description;
-        }
-
-        public String getXd() {
-            return xd;
         }
 
     }

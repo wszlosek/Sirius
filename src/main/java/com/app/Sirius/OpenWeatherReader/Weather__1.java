@@ -52,4 +52,10 @@ public class Weather__1 {
         this.icon = icon;
     }
 
+    @Override
+    public String toString() {
+        return "Weather__1{" +
+                "description='" + description + '\'' +
+                '}';
+    }
 }

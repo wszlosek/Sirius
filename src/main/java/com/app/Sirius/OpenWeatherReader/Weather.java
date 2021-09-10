@@ -153,13 +153,15 @@ public class Weather {
         this.cod = cod;
     }
 
+    public float kelvinToCelsius(double k) { return (float) (k - 273.15); }
+
     @Override
     public String toString() {
         return "Weather{" +
-                "coord=" + coord +
+                "coord=" + coord.getLat() +
                 ", weather=" + weather +
                 ", base='" + base + '\'' +
-                ", main=" + main +
+                ", main_temp=" + kelvinToCelsius(main.getTemp()) +
                 ", visibility=" + visibility +
                 ", wind=" + wind +
                 ", clouds=" + clouds +
