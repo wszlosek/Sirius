@@ -18,8 +18,34 @@
 <body>
 <div id='map' class='map'></div>
 <script th:inline="javascript">
+
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){ break; }
+        }
+    }
+
+    function wait(ms){
+        var start = new Date().getTime();
+        var end = start;
+        while(end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
+
     var map = tt.map({
-        key: "55fTaan5Ak0lpkFRPHk8XzDVAyrU752A", // this will be replaced by Thymeleaf at runtime 55fTaan5Ak0lpkFRPHk8XzDVAyrU752A
+        key: "55fTaan5Ak0lpkFRPHk8XzDVAyrU752A",
         container: 'map',
         style: 'tomtom://vector/1/basic-main'
     });
@@ -35,14 +61,13 @@
         right: [-25, -35]
     }
 
-    const coolLocations = /*[[${coolLocations}]]*/ null;
-    coolLocations.forEach(location => {
+    const locations = /*[[${locations}]]*/ null;
+    locations.forEach(location => {
         const marker = new tt.Marker().setLngLat(location.lnglat).addTo(map);
         const popup = new tt.Popup({offset: popupOffsets}).setHTML(location.printer);
         marker.setPopup(popup).togglePopup();
     });
 
-
 </script>
 </body>
-</html>>
+</html>

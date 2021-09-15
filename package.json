@@ -1,0 +1,8 @@
+{
+  "name": "Sirius",
+  "version": "1.0.0",
+  "dependencies": {
+    "FileReader": "^0.10.2"
+  },
+  "devDependencies": {}
+}

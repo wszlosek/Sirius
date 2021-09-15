@@ -38,7 +38,6 @@ public class Weather {
         URL url = new URL(this.urlAddress);
         InputStreamReader reader = new InputStreamReader(url.openStream());
         com.app.Sirius.OpenWeatherReader.Weather weather = new Gson().fromJson(reader, com.app.Sirius.OpenWeatherReader.Weather.class);
-        System.out.println(weather.toString());
         return weather;
     }
 }
