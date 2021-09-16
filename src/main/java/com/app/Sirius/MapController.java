@@ -23,7 +23,7 @@ public class MapController {
     public double l2;
     public String l3;
 
-    @Value("55fTaan5Ak0lpkFRPHk8XzDVAyrU752A")
+    @Value("YOUR_TOMTOM_API_KEY")
     private String tomTomApiKey;
 
     @GetMapping("/")
