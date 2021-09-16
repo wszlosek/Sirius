@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -127,10 +129,19 @@ public class MapController {
 
         private void initPrinter() {
             Weather__1 w1 = w.getWeather().get(0);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
 
-            this.printer = "Location: " + description + "<br> temp.: "
+            this.printer = "Date: " + dtf.format(now) + "<br> <br>";
+            this.printer += "Location: " + description + "<br> temp.: "
                     + w.kelvinToCelsius(w.getMain().getTemp()) + "°C <br>"
-                    + w1.getDescription();
+                    + w1.getDescription() + "<br> <br> Time zone: UTC";
+
+            if (w.getTimezone() > 0) {
+                this.printer += "+";
+            }
+
+            this.printer += String.valueOf(w.getTimezone() / 3600) + "h";
         }
 
         public String getPrinter() {
