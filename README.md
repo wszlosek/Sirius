@@ -32,7 +32,7 @@ After entering the values of geographic coordinates, the location on the website
 
 <br />
 
-The TomTom Maps API was used to generate the map on the website. The weather information comes from the OpenWeatherMap API. Both of these APIs require a key that can be obtained from their websites (after signing up):
+The **TomTom Maps API** was used to generate the map on the website. The weather information comes from the **OpenWeatherMap API**. Both of these APIs require a key that can be obtained from their websites (after signing up):
 >https://developer.tomtom.com <br />
 >https://openweathermap.org/api
 
@@ -49,7 +49,7 @@ The TomTom Maps API was used to generate the map on the website. The weather inf
 
 ## Presentation of the application
 
-Your custome name of location...
+Your custom name of location...
 
 https://user-images.githubusercontent.com/53795852/133678212-c7c15b4b-c816-4a17-bbfd-9ef89109e184.mp4
 
