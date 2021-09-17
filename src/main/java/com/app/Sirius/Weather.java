@@ -15,7 +15,7 @@ public class Weather {
 
     Weather() {
 
-        this.apiKey = "4b83341bb4c96d5a2b5876abc7751581";
+        this.apiKey = "YOUR_WEATHER_API_KEY";
         this.urlAddress = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}";
     }
 
