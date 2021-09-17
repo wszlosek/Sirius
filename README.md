@@ -40,9 +40,11 @@ The **TomTom Maps API** was used to generate the map on the website. The weather
 
 #### Technologies, libraries, packages:  
 * Spring Boot, version: 2.5.4  <br />
+* Spring Web, version: 5.3.9  <br />
 * Thymeleaf, version: 3.0.12  <br />
 * Google Gson, version: 2.8.8  <br />
 * json-simple, version: 1.1.1  <br />
+* Apache Maven, version: 3.8.2  <br />
 * packages: java.nio, java.time, java.util, java.net, javax.annotation
 
 
