@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -13,17 +14,14 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 @Controller
 public class MapController {
-
     public double l1;
     public double l2;
     public String l3;
 
-    @Value("YOUR_TOMTOM_API_KEY")
+    @Value("55fTaan5Ak0lpkFRPHk8XzDVAyrU752A")
     private String tomTomApiKey;
 
     @GetMapping("/")
@@ -38,52 +36,45 @@ public class MapController {
     }
 
     private void readJSON(String fileName) throws Exception {
-        Gson g = new Gson();
-        JSONObject j = new JSONObject();
+        var file = readFileAsString(fileName);
+        var json = new Gson().fromJson(file, JsonFile.class);
 
-        String file = readFileAsString(fileName);
-        jsonFile json = g.fromJson(file, jsonFile.class);
-
-        l1 = json.latitude;
-        l2 = json.longitude;
-        l3 = json.location;
+        l1 = json.latitude();
+        l2 = json.longitude();
+        l3 = json.location();
     }
 
     private List<Location> locations() {
-
         try {
             // your file path
             readJSON("/Users/wojciechszlosek/Desktop/Java/Sirius/loc.json");
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Location l = new Location(new double[]{l2, l1}, l3);
-
+        var location = new Location(new double[]{l2, l1}, l3);
         try {
-            l.includeWeather();
+            location.includeWeather();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return List.of(l);
+        return List.of(location);
     }
 
     private String getCode() {
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        int month = Calendar.getInstance().get(Calendar.MONTH)+1;
+        int month = Calendar.getInstance().get(Calendar.MONTH) + 1;
         int day = Calendar.getInstance().get(Calendar.DATE);
-        Date date = new Date();
+
         Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(date);
+        calendar.setTime(new Date());
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int min = calendar.get(Calendar.MINUTE);
 
-        return String.valueOf(year) +  String.valueOf(month) +
-                String.valueOf(day) +  String.valueOf(hours) +
-                String.valueOf(min);
+        var stringBuilder = new StringBuilder()
+                .append(year).append(month).append(day).append(hours).append(min);
+
+        return stringBuilder.toString();
     }
 
     private static class Location {
@@ -111,10 +102,9 @@ public class MapController {
             this.weather.setCoords(this.lnglat[1], this.lnglat[0]);
             w = this.weather.initiation();
 
-            if(this.description.equals("")) {
+            if (this.description.equals("")) {
                 this.description = w.getName();
             }
-
             initPrinter();
         }
 
@@ -128,9 +118,9 @@ public class MapController {
         }
 
         private void initPrinter() {
-            Weather__1 w1 = w.getWeather().get(0);
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
+            var w1 = w.getWeather().get(0);
+            var dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            var now = LocalDateTime.now();
 
             this.printer = "Date: " + dtf.format(now) + "<br> <br>";
             this.printer += "Location: " + description + "<br> temp.: "
@@ -141,7 +131,7 @@ public class MapController {
                 this.printer += "+";
             }
 
-            this.printer += String.valueOf(w.getTimezone() / 3600) + "h";
+            this.printer += w.getTimezone() / 3600 + "h";
         }
 
         public String getPrinter() {
@@ -156,7 +146,6 @@ public class MapController {
         public String getDescription() {
             return description;
         }
-
     }
 
 }

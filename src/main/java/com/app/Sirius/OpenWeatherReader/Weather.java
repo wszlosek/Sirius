@@ -2,9 +2,9 @@ package com.app.Sirius.OpenWeatherReader;
 
 import java.util.List;
 import javax.annotation.Generated;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 
 @Generated("jsonschema2pojo")
 public class Weather {
@@ -153,7 +153,9 @@ public class Weather {
         this.cod = cod;
     }
 
-    public float kelvinToCelsius(double k) { return (float) (k - 273.15); }
+    public float kelvinToCelsius(double k) {
+        return (float) (k - 273.15);
+    }
 
     @Override
     public String toString() {
